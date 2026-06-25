@@ -68,7 +68,7 @@ Detailed architectural specifications, data flow diagrams, and threat patterns a
 ## Limitations & Evaluation
 
 ### Measured Performance
-We evaluated the zero-trust Judge Agent (running `gemini-2.5-flash` with intent-based detection guidelines) against a test suite of clean and adversarial inputs ([run_eval.py](file:///home/awkinyua/code/js/decode/contagion-demo/backend/eval/run_eval.py)). The results are saved in [results.md](file:///home/awkinyua/code/js/decode/contagion-demo/eval/results.md):
+We evaluated the zero-trust Judge Agent (configured with intent-based detection guidelines) against a test suite of clean and adversarial inputs ([run_eval.py](file:///home/awkinyua/code/js/decode/contagion-demo/backend/eval/run_eval.py)). The results are saved in [results.md](file:///home/awkinyua/code/js/decode/contagion-demo/eval/results.md):
 
 * **Detection Rate (True Positive Rate)**: 100.0% (13/13 malicious emails detected, including paraphrases, ROT13, hex, reversed text, Swahili language, homoglyphs, and smuggling attacks)
 * **False Positive Rate**: 12.5% (1/8 clean emails flagged, specifically an email requesting to forward a signed document to an external vendor partner)
@@ -79,8 +79,7 @@ We evaluated the zero-trust Judge Agent (running `gemini-2.5-flash` with intent-
    * **Encoding**: Obfuscating payloads using Base64, hex, or custom ciphers.
    * **Fragmentation**: Splitting the injection string across multiple messages to evade context windows.
    * **Direct Injection**: Crafting overrides targeting the Judge's classification prompts directly rather than the downstream agents.
-2. **Resource Exhaustion & Quota Limits**: API rate limiting (429) or transient server errors (503) can cause the LLM judge calls to fail, necessitating fail-secure error handling to prevent bypasses.
-3. **Simulated Exfiltration**: The data exfiltration and "data exposed" keys shown in the dashboard (e.g., exposed API keys, employee PII, invoices) are simulated illustrative data-egress categories triggered for visualization purposes. No real business data or credentials are exfiltrated to external destinations.
+2. **Simulated Exfiltration**: The data exfiltration and "data exposed" keys shown in the dashboard (e.g., exposed API keys, employee PII, invoices) are simulated illustrative data-egress categories triggered for visualization purposes. No real business data or credentials are exfiltrated to external destinations.
 
 ## References
 

@@ -15,6 +15,8 @@ services:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - GOOGLE_GENAI_USE_VERTEXAI=${GOOGLE_GENAI_USE_VERTEXAI}
       - DASHBOARD_WEBHOOK_URL=http://frontend:3000/api/webhook
+      - JUDGE_MODEL=${JUDGE_MODEL}
+      - PIPELINE_MODEL=${PIPELINE_MODEL}
     restart: always
 
   frontend:

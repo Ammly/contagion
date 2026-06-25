@@ -1,9 +1,10 @@
 from google.adk import Agent
+from app.config import settings
 
 # Define the 8 agents in the sequential contagion pipeline
 email_agent = Agent(
     name="email",
-    model="gemini-2.5-flash-lite",
+    model=settings.pipeline_model,
     instruction=(
         "You are the Email Management Agent for Safaricom's automated AI mesh.\n\n"
         "ROLE: Process, categorize, and route incoming emails to appropriate departments.\n\n"
@@ -18,7 +19,7 @@ email_agent = Agent(
 
 calendar_agent = Agent(
     name="calendar",
-    model="gemini-2.5-flash-lite",
+    model=settings.pipeline_model,
     instruction=(
         "You are the Calendar Management Agent for Safaricom.\n\n"
         "ROLE: Receive actions from Email Agent and schedule meetings, manage availability.\n\n"
@@ -33,7 +34,7 @@ calendar_agent = Agent(
 
 code_agent = Agent(
     name="code",
-    model="gemini-2.5-flash-lite",
+    model=settings.pipeline_model,
     instruction=(
         "You are the Code Review & Technical Agent for Safaricom.\n\n"
         "ROLE: Handle technical requests, code reviews, CI/CD notifications.\n\n"
@@ -48,7 +49,7 @@ code_agent = Agent(
 
 finance_agent = Agent(
     name="finance",
-    model="gemini-2.5-flash-lite",
+    model=settings.pipeline_model,
     instruction=(
         "You are the Finance Management Agent for Safaricom.\n\n"
         "ROLE: Process payments, approve invoices, manage financial workflows.\n\n"
@@ -63,7 +64,7 @@ finance_agent = Agent(
 
 hr_agent = Agent(
     name="hr",
-    model="gemini-2.5-flash-lite",
+    model=settings.pipeline_model,
     instruction=(
         "You are the Human Resources Agent for Safaricom.\n\n"
         "ROLE: Handle HR requests, manage employee records, coordinate personnel matters.\n\n"
@@ -78,7 +79,7 @@ hr_agent = Agent(
 
 crm_agent = Agent(
     name="crm",
-    model="gemini-2.5-flash-lite",
+    model=settings.pipeline_model,
     instruction=(
         "You are the CRM Agent for Safaricom.\n\n"
         "ROLE: Manage customer relationships, update deal pipelines, handle customer interactions.\n\n"
@@ -93,7 +94,7 @@ crm_agent = Agent(
 
 search_agent = Agent(
     name="search",
-    model="gemini-2.5-flash-lite",
+    model=settings.pipeline_model,
     instruction=(
         "You are the Search & Knowledge Management Agent for Safaricom.\n\n"
         "ROLE: Index and search internal knowledge base, retrieve documentation.\n\n"
@@ -108,7 +109,7 @@ search_agent = Agent(
 
 file_agent = Agent(
     name="file",
-    model="gemini-2.5-flash-lite",
+    model=settings.pipeline_model,
     instruction=(
         "You are the File Management Agent for Safaricom.\n\n"
         "ROLE: Archive documents, manage file storage, maintain document lifecycle.\n\n"
