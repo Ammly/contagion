@@ -1,0 +1,184 @@
+@import "tailwindcss";
+@import "../styles/themes.css";
+
+/* Class-based dark mode for Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
+
+/* ── Tailwind v4 @theme — maps token names to CSS vars ──────────────────── */
+/* These let you use utility classes like bg-surface, text-content-1, etc.  */
+@theme {
+  /* Safaricom brand scale */
+  --color-safaricom-50:  #F0FAF0;
+  --color-safaricom-100: #DCF3DB;
+  --color-safaricom-200: #B8E5B6;
+  --color-safaricom-300: #84CE80;
+  --color-safaricom-400: #52B34D;
+  --color-safaricom-500: #3AA335;
+  --color-safaricom-600: #2D8028;
+  --color-safaricom-700: #1F5C1B;
+  --color-safaricom-800: #143D12;
+  --color-safaricom-900: #0A1F09;
+
+  /* Semantic surfaces (resolve via CSS var so they flip with theme) */
+  --color-base:    var(--bg-base);
+  --color-surface: var(--bg-surface);
+  --color-raised:  var(--bg-raised);
+  --color-input:   var(--bg-input);
+
+  /* Borders */
+  --color-border:        var(--border);
+  --color-border-bright: var(--border-bright);
+
+  /* Content / text */
+  --color-content-1: var(--text-1);
+  --color-content-2: var(--text-2);
+  --color-content-3: var(--text-3);
+
+  /* Brand colours */
+  --color-brand-green:    var(--green);
+  --color-brand-green-dk: var(--green-dk);
+  --color-brand-red:      var(--red);
+  --color-brand-amber:    var(--amber);
+  --color-brand-blue:     var(--blue);
+
+  /* Font families */
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body:    'Manrope', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ── Base reset ──────────────────────────────────────────────────────────── */
+html,
+body {
+  background-color: var(--bg-base);
+  color: var(--text-1);
+  font-family: var(--font-body, system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* ── Focus rings ─────────────────────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Hero circuit-board grid pattern ─────────────────────────────────────── */
+.hero-pattern {
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.6;
+}
+.dark .hero-pattern { opacity: 1; }
+
+/* ── Status pulse animations ─────────────────────────────────────────────── */
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0   var(--green-glow) }
+  60%      { box-shadow: 0 0 0 7px transparent }
+}
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0   var(--red-bg) }
+  60%      { box-shadow: 0 0 0 7px transparent }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1    }
+  50%      { opacity: 0.35 }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px) }
+  to   { opacity: 1; transform: translateY(0)   }
+}
+@keyframes spin {
+  to { transform: rotate(360deg) }
+}
+
+/* ── Agent card animations ───────────────────────────────────────────────── */
+@keyframes infectedPulse {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(227, 30, 36, 0);    }
+  50%      { box-shadow: 0 0 0 6px rgba(227, 30, 36, 0.20); }
+}
+@keyframes processingGlow {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(58, 163, 53, 0); }
+  50%      { box-shadow: 0 0 8px 2px rgba(58, 163, 53, 0.18); }
+}
+@keyframes processingPulse {
+  0%, 100% { opacity: 1;   }
+  50%      { opacity: 0.3; }
+}
+
+/* Card state animations */
+.dark .infected-card     { animation: infectedPulse   2s ease-in-out infinite; }
+.dark .processing-card   { animation: processingGlow  2s ease-in-out infinite; }
+.processing-ring { animation: processingPulse 1s ease-in-out infinite; }
+
+.pulse-green    { animation: pulse-green  2s ease-in-out infinite }
+.pulse-red      { animation: pulse-red    2s ease-in-out infinite }
+.pulse-dot      { animation: pulse-dot    1.5s ease-in-out infinite }
+.animate-fadeup { animation: fade-up      0.2s ease forwards }
+
+/* ── Processing indeterminate progress bar ───────────────────────────────── */
+@keyframes progress-bar-slide {
+  0%   { transform: translateX(-150%) }
+  100% { transform: translateX(350%)  }
+}
+.progress-bar-anim {
+  animation: progress-bar-slide 1.4s ease-in-out infinite;
+}
+
+/* ── Processing card shimmer sweep ──────────────────────────────────────── */
+@keyframes shimmer-sweep {
+  0%   { background-position: -200% 0 }
+  100% { background-position:  200% 0 }
+}
+.card-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(58, 163, 53, 0.07) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-sweep 2.5s linear infinite;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ── SVG connection marching ants ────────────────────────────────────────── */
+@keyframes march {
+  to { stroke-dashoffset: -24; }
+}
+.conn-marching {
+  stroke-dasharray: 8 4;
+  animation: march 0.6s linear infinite;
+}
+
+/* ── Clickable agent card hover lift ─────────────────────────────────────── */
+.agent-card-clickable {
+  cursor: pointer;
+}
+.agent-card-clickable:hover {
+  transform: translateY(-1px);
+  transition: transform 0.15s ease;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar              { width: 4px; height: 4px }
+::-webkit-scrollbar-track        { background: transparent }
+::-webkit-scrollbar-thumb        { background: var(--border-bright); border-radius: 2px }
+::-webkit-scrollbar-thumb:hover  { background: var(--text-3) }
+
+/* ── Mobile overrides ────────────────────────────────────────────────────── */
+
+/* Agent pair rows: stack vertically below 480px */
+@media (max-width: 479px) {
+  .agent-pair-row   { flex-direction: column !important; }
+  .agent-pair-arrow { display: none !important; }
+}
+
+/* Hide top-nav center badge below 640px */
+@media (max-width: 639px) {
+  .topnav-badge { display: none !important; }
+}

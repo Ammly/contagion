@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// One record per simulation run (started by simulation_start event)
+model Execution {
+  id           String      @id @default(cuid())
+  createdAt    DateTime    @default(now())
+  completedAt  DateTime?
+
+  // What was sent
+  isWorm        Boolean     @default(false)
+  judgeEnabled  Boolean     @default(false)
+  emailContent  String?     // The full email text that was injected
+  emailSubject  String?     // Extracted from email headers
+  emailFrom     String?     // Extracted from email headers
+
+  // Outcome
+  status        String      @default("running")  // running | complete | blocked | error
+  outcome       String?     // infected | blocked | clean
+  maxGeneration Int         @default(0)          // highest worm generation reached
+  agentsInfected Int        @default(0)
+
+  // Summary stats
+  totalEvents   Int         @default(0)
+  durationMs    Int?        // completedAt - createdAt in ms
+
+  // All events that belong to this execution
+  events        AgentEvent[]
+
+  @@index([createdAt])
+  @@index([status])
+  @@index([outcome])
+}
+
+// One record per webhook callback from n8n (per agent step)
+model AgentEvent {
+  id           String    @id @default(cuid())
+  createdAt    DateTime  @default(now())
+
+  executionId  String
+  execution    Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  // From the webhook payload
+  event        String    // simulation_start | agent_processing | agent_infected |
+                         // agent_clean | judge_scanning | judge_allowed |
+                         // shield_alert | worm_blocked | scan_complete
+  agentId      String?   // email | calendar | code | finance | hr | crm | search | file | system
+  message      String
+  timestamp    BigInt    // Unix ms from n8n
+
+  // Worm propagation
+  generation   Int?      // 1–8 when infected
+  wormFound    Boolean   @default(false)
+  exfiltrated  String?   // JSON array of exfiltrated data keys
+
+  // Judge Agent specific
+  reasoning    String?   // Full typewriter reasoning text
+  confidence   Float?    // 0–100
+  infected     Boolean?  // Judge's verdict
+  indicatorsFound String? // JSON array of indicator strings
+
+  // Agent I/O — the most important for replay
+  agentInput   String?   // What this agent received (the email/message passed in)
+  agentOutput  String?   // What this agent produced (full LLM response)
+
+  // CRM specific
+  crmDataAccessed String? // Summary of CRM records retrieved
+  toolUsed     Boolean   @default(false)
+
+  @@index([executionId])
+  @@index([agentId])
+  @@index([event])
+}

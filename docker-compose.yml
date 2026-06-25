@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: contagion-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./frontend/prisma:/frontend/prisma
+      - .env:/app/.env
+    environment:
+      - DATABASE_URL=file:/frontend/prisma/prisma/contagion.db
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GOOGLE_GENAI_USE_VERTEXAI=${GOOGLE_GENAI_USE_VERTEXAI}
+      - DASHBOARD_WEBHOOK_URL=http://frontend:3000/api/webhook
+    restart: always
+
+  frontend:
+    build: ./frontend
+    container_name: contagion-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - .env:/app/.env
+    environment:
+      - DATABASE_URL=file:/app/prisma/prisma/contagion.db
+      - NEXT_PUBLIC_N8N_WEBHOOK_URL=http://backend:8000/webhook/contagion-trigger
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    depends_on:
+      - backend
+    restart: always

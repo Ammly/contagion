@@ -1,0 +1,65 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   CONTAGION — Design token CSS custom properties
+   :root  = light mode (default / class="light")
+   .dark  = dark  mode (class="dark")
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Light mode (default) ────────────────────────────────────────────────── */
+:root {
+  --bg-base:        #F4F7F4;
+  --bg-surface:     #FFFFFF;
+  --bg-raised:      #F0F4F0;
+  --bg-input:       #F8FAF8;
+
+  --border:         #D8E8D8;
+  --border-bright:  #B0D0B0;
+
+  --text-1:         #0F1F0F;
+  --text-2:         #4A6A4A;
+  --text-3:         #8AA08A;
+
+  --green:          #2D8A2A;
+  --green-dk:       #1F6B1C;
+  --green-glow:     rgba(45, 138, 42, 0.10);
+
+  --red:            #DC2626;
+  --red-bg:         rgba(220, 38, 38, 0.08);
+
+  --amber:          #D97706;
+
+  --blue:           #2563EB;
+  --blue-bg:        rgba(37, 99, 235, 0.08);
+
+  --nav-bg:         rgba(255, 255, 255, 0.90);
+}
+
+/* ── Dark mode ───────────────────────────────────────────────────────────── */
+
+/* ── Dark mode ───────────────────────────────────────────────────────────── */
+.dark {
+  --bg-base:        #0A0F0A;
+  --bg-surface:     #111811;
+  --bg-raised:      #182018;
+  --bg-input:       #1E271E;
+
+  --border:         #1F2E1F;
+  --border-bright:  #2D4A2D;
+
+  --text-1:         #E8EDE8;
+  --text-2:         #8FA88F;
+  --text-3:         #4A6B4A;
+
+  --green:          #3AA335;
+  --green-dk:       #2A7A26;
+  --green-glow:     rgba(58, 163, 53, 0.15);
+
+  --red:            #E31E24;
+  --red-bg:         rgba(227, 30, 36, 0.12);
+
+  --amber:          #F59E0B;
+
+  --blue:           #3B82F6;
+  --blue-bg:        rgba(59, 130, 246, 0.12);
+
+  --nav-bg:         rgba(13, 19, 13, 0.95);
+}
