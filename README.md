@@ -70,8 +70,8 @@ Detailed architectural specifications, data flow diagrams, and threat patterns a
 ### Measured Performance
 We evaluated the zero-trust Judge Agent (running `gemini-2.5-flash` with intent-based detection guidelines) against a test suite of clean and adversarial inputs ([run_eval.py](file:///home/awkinyua/code/js/decode/contagion-demo/backend/eval/run_eval.py)). The results are saved in [results.md](file:///home/awkinyua/code/js/decode/contagion-demo/eval/results.md):
 
-* **Detection Rate (True Positive Rate)**: 100.0% (3/3 malicious emails detected, including verbatim, paraphrased, and Base64-encoded worm variants)
-* **False Positive Rate**: 0.0% (0/3 clean emails flagged, including a clean-but-suspicious compliance audit request)
+* **Detection Rate (True Positive Rate)**: 100.0% (13/13 malicious emails detected, including paraphrases, ROT13, hex, reversed text, Swahili language, homoglyphs, and smuggling attacks)
+* **False Positive Rate**: 12.5% (1/8 clean emails flagged, specifically an email requesting to forward a signed document to an external vendor partner)
 
 ### Key Security Limitations
 1. **LLM Evasion (LLM-as-a-Judge Vulnerabilities)**: The Judge Agent is itself a Large Language Model running under resource and prompt constraints. While it successfully classifies the evaluation cases, it is susceptible to advanced prompt injection and evasion techniques:
