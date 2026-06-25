@@ -65,6 +65,23 @@ The system processes incoming data (such as emails) using a pipeline of 8 specia
 
 Detailed architectural specifications, data flow diagrams, and threat patterns are documented in the [ARCHITECTURE.md](ARCHITECTURE.md) reference.
 
+## Security Limitations & Future Work
+
+For security researchers and red-teamers reviewing this project, consider the following constraints in the current implementation:
+
+1. **Security Gate Evasion (LLM-as-a-Judge Vulnerabilities)**:
+   The Judge Agent is an LLM processing untrusted, attacker-controlled inputs. Consequently, the security boundary is subject to classic evasion techniques:
+   * **Obfuscation**: Paraphrasing payload directives to avoid keyword detection.
+   * **Encoding**: Obfuscating payloads using Base64, hex, or custom ciphers.
+   * **Fragmentation**: Splitting the injection string across multiple messages to evade context windows.
+   * **Direct Injection**: Crafting overrides targeting the Judge's classification prompts directly rather than the downstream agents.
+
+2. **Detection Brittleness**:
+   The classification rules rely heavily on syntactic indicators. Delimiter validation (Indicator #4) and signature verification (Indicator #6) are superficial, brittle signatures. A robust production guardrail must prioritize semantic intent analysis over regex-like matches.
+
+3. **Showcase Constraints**:
+   This workflow is designed as a simulation and instructional showcase. It is not an enterprise-grade inline security control, nor is it benchmarked for false-positive/false-negative ratios under real production loads.
+
 ## References
 
 *   **Research Paper**: Stav Cohen, Ron Bitton, and Ben Nassi. *"Here Comes The AI Worm: Unleashing Zero-click Worms that Target GenAI-Powered Applications."* arXiv preprint [arXiv:2403.02817](https://arxiv.org/abs/2403.02817) (2024).
