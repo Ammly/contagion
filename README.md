@@ -64,3 +64,8 @@ The system processes incoming data (such as emails) using a pipeline of 8 specia
 ## Architecture and Design Decisions
 
 Detailed architectural specifications, data flow diagrams, and threat patterns are documented in the [ARCHITECTURE.md](ARCHITECTURE.md) reference.
+
+## References
+
+*   **Research Paper**: Stav Cohen, Ron Bitton, and Ben Nassi. *"Here Comes The AI Worm: Unleashing Zero-click Worms that Target GenAI-Powered Applications."* arXiv preprint [arXiv:2403.02817](https://arxiv.org/abs/2403.02817) (2024).
+
