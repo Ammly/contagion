@@ -26,7 +26,7 @@ const AGENT_ICONS: Record<AgentId, React.ComponentType<{ size?: number; color?: 
 
 // Descriptive sub-labels matching the mockup design
 const AGENT_SUBTITLES: Record<AgentId, string> = {
-  email:    'n8n Internal Node',
+  email:    'Mail Ingestion Node',
   calendar: 'OAuth Connected',
   code:     'Sandboxed Runtime',
   finance:  'High Privilege',

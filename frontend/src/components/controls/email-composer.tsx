@@ -178,7 +178,7 @@ export function EmailComposer() {
       })
       if (!res.ok) {
         if (res.status >= 502 && res.status <= 504) {
-          setToast('Could not connect to workflow. Check n8n is running.')
+          setToast('Could not connect to workflow. Check backend is running.')
           onClose()
           return
         }
@@ -188,7 +188,7 @@ export function EmailComposer() {
       onClose()
     } catch (err: unknown) {
       if (err instanceof TypeError) {
-        setToast('Could not connect to workflow. Check n8n is running.')
+        setToast('Could not connect to workflow. Check backend is running.')
         onClose()
         return
       }

@@ -101,7 +101,7 @@ function EmptyState() {
         style={{ fontSize: 13, color: 'var(--text-3)', lineHeight: 1.6 }}
       >
         Awaiting simulation…<br />
-        Events will appear as the n8n workflow executes.
+        Events will appear as the simulation workflow executes.
       </p>
     </div>
   )
@@ -165,7 +165,7 @@ export function EventLog() {
             textAlign:    'right',
           }}
         >
-          Real-time callbacks from n8n online workflow executes.
+          Real-time callbacks from simulation workflow executes.
         </span>
       </div>
 

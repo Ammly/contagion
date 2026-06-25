@@ -66,7 +66,7 @@ export function EventLog() {
           <h3 className="font-mono" style={{ fontSize: 17, fontWeight: 700, color: '#64748b', letterSpacing: '0.12em', textTransform: 'uppercase', margin: 0 }}>
             Event Log
           </h3>
-          <p style={{ fontSize: 15, color: '#94a3b8', margin: '2px 0 0' }}>Real-time callbacks from n8n workflow executions</p>
+          <p style={{ fontSize: 15, color: '#94a3b8', margin: '2px 0 0' }}>Real-time callbacks from simulation workflow executions</p>
         </div>
         <span className="font-mono" style={{ background: '#f1f5f9', color: '#64748b', padding: '2px 8px', borderRadius: 999, fontSize: 13, fontWeight: 700 }}>
           {visible.length} events
@@ -85,7 +85,7 @@ export function EventLog() {
         {visible.length === 0 ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
             <p className="font-mono" style={{ fontSize: 16, color: '#94a3b8' }}>
-              Awaiting simulation... Events will appear as the n8n workflow executes.
+              Awaiting simulation... Events will appear as the simulation workflow executes.
               <motion.span animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }} style={{ marginLeft: 4 }}>▋</motion.span>
             </p>
           </div>
