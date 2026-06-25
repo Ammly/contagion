@@ -227,7 +227,7 @@ export function BlastRadius() {
             letterSpacing: '0.12em',
           }}
         >
-          Data Exposure
+          Data Exposure (SIMULATED)
         </div>
       </div>
 
@@ -266,7 +266,7 @@ export function BlastRadius() {
                 valueColor="var(--red)"
               />
               <StatTile
-                label="Data categories"
+                label="Simulated categories"
                 value={String(totalExfiltrated.length)}
                 valueColor={totalExfiltrated.length > 0 ? 'var(--red)' : 'var(--text-2)'}
               />

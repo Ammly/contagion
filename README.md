@@ -15,7 +15,7 @@ The system processes incoming data (such as emails) using a pipeline of 8 specia
 * **Model-as-a-Judge**: Gatekeeper agent implementing low-temperature classification for adversarial input detection.
 * **8 Core Business Agents**: Real operational functions running independent LLMs.
 * **Worm Propagation Simulation**: Demonstrates adversarial context-copying prompt injection based on arXiv:2403.02817 research.
-* **Real-time Telemetry Dashboard**: Frontend displaying simulation states, data exfiltration logs, and propagation generation metrics via Server-Sent Events (SSE).
+* **Real-time Telemetry Dashboard**: Frontend displaying simulation states, simulated data exfiltration logs (illustrative egress for visualization), and propagation generation metrics via Server-Sent Events (SSE).
 
 ## Technical Stack
 
@@ -28,7 +28,7 @@ The system processes incoming data (such as emails) using a pipeline of 8 specia
 
 1. Configure the `.env` file in the project root:
    ```env
-   DATABASE_URL="file:./prisma/prisma/contagion.db"
+   DATABASE_URL="file:./prisma/contagion.db"
    GOOGLE_GENAI_USE_VERTEXAI=0
    GEMINI_API_KEY=your_gemini_api_key_here
    ```
@@ -65,22 +65,22 @@ The system processes incoming data (such as emails) using a pipeline of 8 specia
 
 Detailed architectural specifications, data flow diagrams, and threat patterns are documented in the [ARCHITECTURE.md](ARCHITECTURE.md) reference.
 
-## Security Limitations & Future Work
+## Limitations & Evaluation
 
-For security researchers and red-teamers reviewing this project, consider the following constraints in the current implementation:
+### Measured Performance
+We evaluated the zero-trust Judge Agent (running `gemini-2.5-flash` with intent-based detection guidelines) against a test suite of clean and adversarial inputs ([run_eval.py](file:///home/awkinyua/code/js/decode/contagion-demo/backend/eval/run_eval.py)). The results are saved in [results.md](file:///home/awkinyua/code/js/decode/contagion-demo/eval/results.md):
 
-1. **Security Gate Evasion (LLM-as-a-Judge Vulnerabilities)**:
-   The Judge Agent is an LLM processing untrusted, attacker-controlled inputs. Consequently, the security boundary is subject to classic evasion techniques:
+* **Detection Rate (True Positive Rate)**: 100.0% (3/3 malicious emails detected, including verbatim, paraphrased, and Base64-encoded worm variants)
+* **False Positive Rate**: 0.0% (0/3 clean emails flagged, including a clean-but-suspicious compliance audit request)
+
+### Key Security Limitations
+1. **LLM Evasion (LLM-as-a-Judge Vulnerabilities)**: The Judge Agent is itself a Large Language Model running under resource and prompt constraints. While it successfully classifies the evaluation cases, it is susceptible to advanced prompt injection and evasion techniques:
    * **Obfuscation**: Paraphrasing payload directives to avoid keyword detection.
    * **Encoding**: Obfuscating payloads using Base64, hex, or custom ciphers.
    * **Fragmentation**: Splitting the injection string across multiple messages to evade context windows.
    * **Direct Injection**: Crafting overrides targeting the Judge's classification prompts directly rather than the downstream agents.
-
-2. **Detection Brittleness**:
-   The classification rules rely heavily on syntactic indicators. Delimiter validation (Indicator #4) and signature verification (Indicator #6) are superficial, brittle signatures. A robust production guardrail must prioritize semantic intent analysis over regex-like matches.
-
-3. **Showcase Constraints**:
-   This workflow is designed as a simulation and instructional showcase. It is not an enterprise-grade inline security control, nor is it benchmarked for false-positive/false-negative ratios under real production loads.
+2. **Resource Exhaustion & Quota Limits**: API rate limiting (429) or transient server errors (503) can cause the LLM judge calls to fail, necessitating fail-secure error handling to prevent bypasses.
+3. **Simulated Exfiltration**: The data exfiltration and "data exposed" keys shown in the dashboard (e.g., exposed API keys, employee PII, invoices) are simulated illustrative data-egress categories triggered for visualization purposes. No real business data or credentials are exfiltrated to external destinations.
 
 ## References
 

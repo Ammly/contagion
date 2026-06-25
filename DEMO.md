@@ -12,7 +12,7 @@ This guide describes how to run and test the AI agent security simulation.
 The environment configuration is managed by the `.env` file at the root of the project:
 
 ```env
-DATABASE_URL="file:./prisma/prisma/contagion.db"
+DATABASE_URL="file:./prisma/contagion.db"
 GOOGLE_GENAI_USE_VERTEXAI=0
 GEMINI_API_KEY=your_gemini_api_key_here
 ```

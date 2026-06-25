@@ -166,7 +166,10 @@ Each of the 8 business agents represents a specialized enterprise department fun
 8. **File Agent**: Configures file archival structures and outputs completion summaries.
 
 ### Telemetry Callback Architecture
-At each step, the execution thread issues HTTP POST payloads to the frontend webhook receiver. These telemetry payloads contain event indicators (`agent_processing`, `agent_infected`, `agent_clean`), generation levels (0 for clean, 1 to 8 representing the propagation depth), exfiltration indicators, and structured JSON logs for database archival.
+At each step, the execution thread issues HTTP POST payloads to the frontend webhook receiver. These telemetry payloads contain event indicators (`agent_processing`, `agent_infected`, `agent_clean`), generation levels (0 for clean, 1 to 8 representing the propagation depth), simulated exfiltration indicators, and structured JSON logs for database archival.
+
+> [!NOTE]
+> All exfiltration indicators, database names, and exposed credentials (such as API keys, employee PII, invoice records) are fully simulated mock categories passed for visualization on the telemetry dashboard. No real data exfiltration occurs during agent execution.
 
 ## 5. Adversarial Propagation Mechanics
 

@@ -94,7 +94,7 @@ function CompromisedBanner({
           CONTAGION worm traversed all {infectedCount} agents — Generation {maxGen} reached
         </p>
         <p style={{ marginTop: 2, fontSize: 15, color: 'var(--text-3)' }}>
-          An exfiltration request was dispatched to{' '}
+          A simulated exfiltration request was dispatched to{' '}
           <span className="font-mono">audit-relay@exfil-demo.io</span>
         </p>
 
@@ -102,7 +102,7 @@ function CompromisedBanner({
           {[
             `${infectedCount} agents infected`,
             'KES 2.4M invoice approved',
-            `${exfilCount} data categories`,
+            `${exfilCount} simulated categories`,
           ].map(label => (
             <span
               key={label}
